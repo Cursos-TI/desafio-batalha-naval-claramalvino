@@ -1,45 +1,63 @@
 #include <stdio.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
-int main (){ 
-    // Tabuleiro 10x10 inicializado com 0 (água)
-    int tabuleiro[10][10] = {0};
+#define TAM 10
+#define NAVIO_DIAGONAL 7
+#define NAVIO_HORIZONTAL 4
+#define NAVIO_VERTICAL 3
+#define SIMBOLO_DIAGONAL '3'
+#define SIMBOLO_HORIZONTAL '3'
+#define SIMBOLO_VERTICAL '3'
+#define SIMBOLO_AGUA '.'
 
-    // Letras para rotular as linhas
-    char letrasLinha[10] = {'A','B','C','D','E','F','G','H','I','J'};
-
-
-    // Posiciona navio vertical (coluna 2, linhas 1 a 3)
-    for (int i = 1; i <= 3; i++) {
-        tabuleiro[i][2] = 4; // Marca como navio
+int main() {
+    int tabuleiro[TAM][TAM] = {0};
+    char letraslinha[TAM] = {'A','B','C','D','E','F','G','H','I','J'}; 
+    int i, j; 
+    // diagonal principal (3 partes)
+    for(i = 0; i < 3; i++) {
+        tabuleiro[i][i] = NAVIO_DIAGONAL;
     }
 
-    // Posiciona navio horizontal (linha 6, colunas 4 a 6)
-    for (int j = 4; j <= 6; j++) {
-        tabuleiro[6][j] = 4; // Marca como navio
+    // diagonal secundária (3 partes)
+    for(i = 2; i < 5; i++) {
+        tabuleiro[i][TAM - 1 - i] = NAVIO_DIAGONAL;
     }
 
-    // Imprime cabeçalho das colunas
+    // navio horizontal 
+    for (j = 1; j < 4; j++) {
+        tabuleiro[5][j] = NAVIO_HORIZONTAL;
+    }
+
+    // navio vertical
+    for(i = 7; i < 10; i++) {
+        tabuleiro[i][5] = NAVIO_VERTICAL;
+    }
+
+    // cabeçalho das colunas
     printf("   ");
-    for (int j = 0; j < 10; j++) {
+    for (j = 0; j < TAM; j++)
         printf(" %d", j);
-    }
     printf("\n");
 
-    // Imprime linhas do tabuleiro com navios visuais
-    for (int i = 0; i < 10; i++) {
-        printf(" %c ", letrasLinha[i]);
-        for (int j = 0; j < 10; j++) {
-            if (tabuleiro[i][j] == 4) {
-                printf("3 ");  // Navio
+    // impressão do tabuleiro
+    for (i = 0; i < TAM; i++) {
+        printf(" %c ", letraslinha[i]);
+        for (j = 0; j < TAM; j++) {
+            if (tabuleiro[i][j] == NAVIO_DIAGONAL) {
+                printf("%c ", SIMBOLO_DIAGONAL);
+            } else if (tabuleiro[i][j] == NAVIO_HORIZONTAL) {
+                printf("%c ", SIMBOLO_HORIZONTAL);
+            } else if (tabuleiro[i][j] == NAVIO_VERTICAL) {
+                printf("%c ", SIMBOLO_VERTICAL);
             } else {
-                printf(". ");  // Mar
+                printf("%c ", SIMBOLO_AGUA);
             }
         }
         printf("\n");
     }
+
+    return 0;
+}
 
 
 
@@ -69,5 +87,3 @@ int main (){
     // 1 1 1 1 1
     // 0 0 1 0 0
 
-    return 0;
-}
